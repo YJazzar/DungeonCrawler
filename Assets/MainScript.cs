@@ -7,9 +7,10 @@ using UnityEngine;
 public class MainScript : MonoBehaviour
 {
 
+    public GameObject model0;
     public GameObject model1;
-    public GameObject model2;
 
+    private int model = 0;
 
     private GameObject currentModel;
     // private bool temp = false;
@@ -18,7 +19,7 @@ public class MainScript : MonoBehaviour
     {
         Debug.Log("main script running");
 
-        currentModel = Instantiate(model2, transform.position, transform.rotation) as GameObject;
+        currentModel = Instantiate(model0, transform.position, transform.rotation) as GameObject;
         currentModel.transform.parent = transform;
 
 
@@ -26,30 +27,39 @@ public class MainScript : MonoBehaviour
         // model2.SetActive(false);
     }
 
-    public void FixedUpdate()
+    public void Update()
     {
-        if (Input.GetKey(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.I))
         {
-            Debug.Log("Changing model");
+            model++; 
+            model %= 2;
+
             ChangeModel();
         }
     }
 
     public void ChangeModel()
     {
-        if (currentModel == model1)
+        Debug.Log("model = " + model);
+        if (model == 0)
         {
-            GameObject thisModel = Instantiate(model2, transform.position, transform.rotation) as GameObject;
-            Destroy(currentModel);
-            thisModel.transform.parent = transform;
-            currentModel = thisModel;
-        }
-        else
-        {
+            Debug.Log("Changing to model 2");
             GameObject thisModel = Instantiate(model1, transform.position, transform.rotation) as GameObject;
             Destroy(currentModel);
             thisModel.transform.parent = transform;
             currentModel = thisModel;
+        }
+        else if (model == 1)
+        {
+            Debug.Log("Changing to model 1");
+            GameObject thisModel = Instantiate(model0, transform.position, transform.rotation) as GameObject;
+            Destroy(currentModel);
+            thisModel.transform.parent = transform;
+            currentModel = thisModel;
+        }
+        else 
+        {
+            Debug.Log("ERROR: mode = " + model);
         }
     }
 }
