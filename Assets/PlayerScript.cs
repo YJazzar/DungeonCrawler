@@ -12,7 +12,7 @@ public class PlayerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Hellow World!11");
+        Debug.Log("From the player script");
     }
 
     // Update is called once per frame
