@@ -10,7 +10,7 @@ public class MainScript : MonoBehaviour
     public GameObject model0;
     public GameObject model1;
 
-    private int model = 0;
+    private int model = 1;
 
     private GameObject currentModel;
     // private bool temp = false;
@@ -43,7 +43,7 @@ public class MainScript : MonoBehaviour
         Debug.Log("model = " + model);
         if (model == 0)
         {
-            Debug.Log("Changing to model 2");
+            Debug.Log("Changing to model 1");
             GameObject thisModel = Instantiate(model1, transform.position, transform.rotation) as GameObject;
             Destroy(currentModel);
             thisModel.transform.parent = transform;
@@ -51,7 +51,7 @@ public class MainScript : MonoBehaviour
         }
         else if (model == 1)
         {
-            Debug.Log("Changing to model 1");
+            Debug.Log("Changing to model 0");
             GameObject thisModel = Instantiate(model0, transform.position, transform.rotation) as GameObject;
             Destroy(currentModel);
             thisModel.transform.parent = transform;
