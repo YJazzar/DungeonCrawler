@@ -23,23 +23,15 @@ public class PlayerScript : MonoBehaviour
     {
         float inputX = Input.GetAxis("Horizontal");
         float inputY = Input.GetAxis("Jump");
-        float inputZ = Input.GetAxis("Vertical");
+        // float inputZ = Input.GetAxis("Vertical");
 
 
-        Vector3 movement = new Vector3(speed.x * inputX, 0, speed.z * inputZ);
+        Vector3 movement = new Vector3(speed.x * inputX, 0, 0);
 
         movement *= Time.deltaTime;
         if (movement.x > maxspeed.x) {
             movement.x = 5;
         }
-
-        // position  -9.5 < x < 6
-        //             0 < y < 9.7
-
-        // if (-9.5 < transform.Position.x < 6) {
-
-        // }
-        // Debug.Log(transform.position.x);
 
 
         if (inputY > 0) { jump = true; }
@@ -59,8 +51,8 @@ public class PlayerScript : MonoBehaviour
         if (movement.z > maxspeed.z) {
             movement.z = 5;
         }
-        Debug.Log(movement.x);
-        Debug.Log(movement.z);
+        // Debug.Log(movement.x);
+        // Debug.Log(movement.z);
         transform.Translate(movement, Space.World);
     }
 
