@@ -50,7 +50,7 @@ public class PlayerScript : MonoBehaviour
         else {
             jumpTime = 0;
         }
-        if (jump and ) {
+        if (jump) {
             movement.y = speed.y * inputY * Time.deltaTime;
             jumpTime -= Time.deltaTime;
             if (jumpTime < 0) { jump = false; }
