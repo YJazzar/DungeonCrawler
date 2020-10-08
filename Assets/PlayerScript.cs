@@ -11,7 +11,7 @@ public class PlayerScript : MonoBehaviour
     public Vector3 maxspeed = new Vector3(3, 3, 3);
     public double jumpTime = 1.5;
     public bool jump = false;
-    public float jumpHeight = 8;
+    public float jumpHeight = 1;
 
     public GameObject g;
 
@@ -25,15 +25,20 @@ public class PlayerScript : MonoBehaviour
     void FixedUpdate()
     {
         float inputX = Input.GetAxis("Horizontal");
-        float inputY = Input.GetAxis("Jump");
+        float inputY = Input.GetAxis("Vertical");
 
 
-        Vector3 movement = new Vector3(speed.x * inputX, 0, speed.z * inputZ);
+
+        Vector3 movement = new Vector3(speed.x * inputX, speed.y * inputY, 0);
 
         movement *= Time.deltaTime;
         if (movement.x > maxspeed.x) {
             movement.x = 5;
         }
+        if (movement.y > maxspeed.y) {
+            movement.y = 5;
+        }
+
 
         // position  -9.5 < x < 6
         //             0 < y < 9.7
@@ -43,13 +48,14 @@ public class PlayerScript : MonoBehaviour
         // }
         // Debug.Log(transform.position.x);
 
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            g = GameObject.Find("Player");
-            Rigidbody r = GameObject.Find("Player").GetComponent<Rigidbody>();
-            r.velocity = new Vector3 (r.velocity.x, jumpHeight, r.velocity.z);
+        // if (Input.GetKey(KeyCode.Space)) {
+        //     g = GameObject.Find("Player");
+        //     Rigidbody r = GameObject.Find("Player").GetComponent<Rigidbody>();
+        //     if (r.velocity.y > maxspeed.y) { r.velocity = new Vector3 (r.velocity.x, r.velocity.y, r.velocity.z); }
+        //     else { r.velocity = new Vector3 (r.velocity.x, r.velocity.y + jumpHeight*inputY, r.velocity.z); }
             // .getComponent<Rigidbody>();
             // r.velocity = new Vector3(r.velocity.x, 8, r.velocity.z);
-        }
+        // }
 
         // if (inputY > 0) { jump = true; }
 
@@ -65,8 +71,8 @@ public class PlayerScript : MonoBehaviour
         //     if (jumpTime < 0) { jump = false; }
         // }
 
-        Debug.Log(movement.x);
-        Debug.Log(movement.z);
+        // Debug.Log(movement.x);
+        // Debug.Log(movement.z);
         transform.Translate(movement, Space.World);
     }
 

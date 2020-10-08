@@ -158,6 +158,9 @@ MonoBehaviour:
   speed: {x: 10, y: 10, z: 10}
   maxspeed: {x: 30, y: 30, z: 30}
   jumpTime: 1.5
+  jump: 0
+  jumpHeight: 1
+  g: {fileID: 0}
 --- !u!65 &375650141
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -246,7 +249,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 120
   m_CollisionDetection: 0
 --- !u!1 &1062983711
 GameObject:
@@ -871,8 +874,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58ed0f1b281bc064ca577d12ef6c8492, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model0: {fileID: 3862970877987744960, guid: 4d55cb5ab348ad04ab08fa5d79f01ff3, type: 3}
-  model1: {fileID: 9095056513011854879, guid: 9161fce1a019c1c46b8d4bfd5ed3c333, type: 3}
+  models: []
 --- !u!1 &2143991093
 GameObject:
   m_ObjectHideFlags: 0
