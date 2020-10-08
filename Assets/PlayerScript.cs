@@ -23,12 +23,26 @@ public class PlayerScript : MonoBehaviour
 
 
     private float tiltAngle = 0.0f;
-    private float smooth = 5.0f;
     private bool rotatingLeft;
-    bool rotatingRight;
+    private bool rotatingRight;
+    public float tiltIncrement = 3.0f;
 
     public Vector3 speed = new Vector3(10, 10, 0);
     public Vector3 maxspeed = new Vector3(30, 30, 0);
+
+
+    private KeyCode[] numberKeyCodes = {
+        KeyCode.Alpha0,
+        KeyCode.Alpha1,
+        KeyCode.Alpha2,
+        KeyCode.Alpha3,
+        KeyCode.Alpha4,
+        KeyCode.Alpha5,
+        KeyCode.Alpha6,
+        KeyCode.Alpha7,
+        KeyCode.Alpha8,
+        KeyCode.Alpha9,
+     };
 
 
     // Start is called before the first frame update
@@ -36,17 +50,16 @@ public class PlayerScript : MonoBehaviour
     {
         Debug.Log("From the player script");
 
+        // Create the initial object
         currModelNumber = 0;
-
         loadPlayerModels();
-
         changeModel();
     }
 
     public void Update()
     {
-    
         handleRotation();
+        handleModelChange();
     }
 
     public void FixedUpdate()
@@ -58,11 +71,22 @@ public class PlayerScript : MonoBehaviour
     // If the player did issue a command to change the model, then call the function ChangeModel()
     public void handleModelChange()
     {
-        
+
         if (Input.GetKeyDown(changeModelButton))
         {
             currModelNumber = (++currModelNumber) % models.Count;
             changeModel();
+        }
+
+
+        for (int i = 0; i < numberKeyCodes.Length; i++)
+        {
+            if (Input.GetKeyDown(numberKeyCodes[i]) && i < models.Count)
+            {
+                currModelNumber = i;
+                changeModel();
+                break;
+            }
         }
 
     }
@@ -116,13 +140,10 @@ public class PlayerScript : MonoBehaviour
         {
             // Rotate the cube by converting the angles into a quaternion.
             Quaternion target = Quaternion.Euler(0, 0, tiltAngle);
-
-            // Dampen towards the target rotation
-            // transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * smooth);
             transform.rotation = target;
 
             Debug.Log("Rotating NOW = " + tiltAngle);
-            tiltAngle += 1;
+            tiltAngle += tiltIncrement;
         }
 
 
@@ -131,13 +152,10 @@ public class PlayerScript : MonoBehaviour
         {
             // Rotate the cube by converting the angles into a quaternion.
             Quaternion target = Quaternion.Euler(0, 0, tiltAngle);
-
-            // Dampen towards the target rotation
-            // transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * smooth);
             transform.rotation = target;
 
             Debug.Log("Rotating NOW = " + tiltAngle);
-            tiltAngle -= 1;
+            tiltAngle -= tiltIncrement;
         }
     }
 
