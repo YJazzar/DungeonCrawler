@@ -50,6 +50,10 @@ Material:
     - _BumpFace: 0
     - _BumpOutline: 0
     - _ColorMask: 15
+<<<<<<< Updated upstream
+=======
+    - _CullMode: 0
+>>>>>>> Stashed changes
     - _Diffuse: 0.5
     - _DiffusePower: 1
     - _FaceDilate: 0.1
@@ -96,7 +100,11 @@ Material:
     - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EnvMatrixRotation: {r: 0, g: 0, b: 0, a: 0}
+<<<<<<< Updated upstream
     - _FaceColor: {r: 1, g: 1, b: 1, a: 1}
+=======
+    - _FaceColor: {r: 0.10234961, g: 0.83826536, b: 0.9433962, a: 1}
+>>>>>>> Stashed changes
     - _GlowColor: {r: 0, g: 1, b: 0, a: 0.5}
     - _MaskCoord: {r: 0, g: 0, b: 32767, a: 32767}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
