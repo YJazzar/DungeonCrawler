@@ -208,7 +208,7 @@ public class PlayerScript : MonoBehaviour
             transform.Translate(Vector3.zero, Space.World);
         }
 
-        if (collision.gameObject.name == "test")  // or if(gameObject.CompareTag("YourWallTag"))
+        if (collision.gameObject.name == "cube_hole_wall" || collision.gameObject.name == "circle_hole_wall" || collision.gameObject.name == "pill_hole_wall")  // or if(gameObject.CompareTag("YourWallTag"))
         {
             Debug.Log("Collision 2");
             transform.Translate(Vector3.zero, Space.World);
