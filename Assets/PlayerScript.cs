@@ -191,13 +191,13 @@ public class PlayerScript : MonoBehaviour
 
                 // temp = AssetDatabase.LoadAssetAtPath(sFilePath, typeof(Object)) as GameObject;
                 temp = Resources.Load(finalResPath, typeof(GameObject)) as GameObject;
-                Debug.Log("Adding the model: " +  finalResPath + " is null?: " + (temp == null? "yes" : "no"));
+                // Debug.Log("Adding the model: " +  finalResPath + " is null?: " + (temp == null? "yes" : "no"));
 
                 models.Add(temp);
             }
         }
-        Debug.Log("End Paths: [" + aFilePaths.ToString() + "] paths");
-        Debug.Log("Added [" + models.Count + "] Objects");
+        // Debug.Log("End Paths: [" + aFilePaths.ToString() + "] paths");
+        // Debug.Log("Added [" + models.Count + "] Objects");
     }
 
     void OnCollisionEnter(Collision collision)
