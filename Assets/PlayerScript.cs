@@ -96,7 +96,38 @@ public class PlayerScript : MonoBehaviour
         float inputX = Input.GetAxis("Horizontal");
         float inputY = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(speed.x * inputX, speed.y * inputY, 0);
+        Vector3 movement = new Vector3(0, 0, 0);
+
+        if (inputX != 0 || inputY != 0) {   
+            movement = new Vector3(speed.x * inputX, speed.y * inputY, 0);           
+        }
+        else  {
+
+            if (transform.position.x < 0) {
+                movement.x += 3;
+            }
+            else if (transform.position.x > 0)
+            {
+                movement.x -= 3;
+            }
+            else if (transform.position.x == 0)
+            {
+                movement.x -= 0.1f;
+            }
+
+            if (transform.position.y < 6)
+            {
+                movement.y += 3;
+            }
+            else if (transform.position.y > 6)
+            {
+                movement.y -= 3;
+            }
+            else if (transform.position.y == 6)
+            {
+                movement.y -= 0.1f;
+            }
+        }
 
         movement *= Time.deltaTime;
         if (movement.x > maxspeed.x)
@@ -182,7 +213,7 @@ public class PlayerScript : MonoBehaviour
         foreach (string sFilePath in aFilePaths)
         {
             // Debug.Log("Path: [" + sFilePath + "] paths");
-            if (Path.GetExtension(sFilePath) == ".fbx" || Path.GetExtension(sFilePath) == ".prefab")
+            if (Path.GetExtension(sFilePath) == ".prefab")
             {
                 string[] path = sFilePath.Split(new char[] { '/' });
                 int n = path.Length; 
@@ -202,17 +233,37 @@ public class PlayerScript : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name == "Wall (Left)" || collision.gameObject.name == "Wall (Right)" || collision.gameObject.name == "Wall (Top)")  // or if(gameObject.CompareTag("YourWallTag"))
-        {
-            Debug.Log("Collision");
-            transform.Translate(Vector3.zero, Space.World);
-        }
+        Debug.Log("Colliding with: " + collision.gameObject.name);
 
-        if (collision.gameObject.name == "cube_hole_wall" || collision.gameObject.name == "circle_hole_wall" || collision.gameObject.name == "pill_hole_wall")  // or if(gameObject.CompareTag("YourWallTag"))
-        {
-            Debug.Log("Collision 2");
-            transform.Translate(Vector3.zero, Space.World);
-        }
+        // if (collision.gameObject.name == "Wall (Left)" || collision.gameObject.name == "Wall (Right)" || collision.gameObject.name == "Wall (Top)")  // or if(gameObject.CompareTag("YourWallTag"))
+        // {
+        //     Debug.Log("Collision");
+        //     transform.Translate(Vector3.zero, Space.World);
+        // }
+
+        // if (collision.gameObject.name == "cube_hole_wall" || collision.gameObject.name == "circle_hole_wall" || collision.gameObject.name == "pill_hole_wall")  // or if(gameObject.CompareTag("YourWallTag"))
+        // {
+        //     Debug.Log("Collision 2");
+        //     transform.Translate(Vector3.zero, Space.World);
+        // }
+
+        // if (collision.gameObject.name.Contains("wall"))
+        // {
+        //     Debug.Log("Collision 3");
+        //     transform.Translate(Vector3.zero, Space.World);
+        // }
+
+        // if (collision.gameObject.name.Contains("New"))
+        // {
+        //     Debug.Log("Collision 4");
+        //     transform.Translate(Vector3.zero, Space.World);
+        // }
+
+    }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        Debug.Log("Collider with: " + collider.gameObject.name);
     }
 
 }
