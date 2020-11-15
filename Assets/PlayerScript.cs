@@ -171,7 +171,7 @@ public class PlayerScript : MonoBehaviour
 
     public void loadPlayerModels()
     {
-        string sAssetFolderPath = "Assets/PlayerModels";
+        string sAssetFolderPath = "Assets/Resources/PlayerModels";
         string[] aux = sAssetFolderPath.Split(new char[] { '/' });
         string onlyFolderPath = aux[0] + "/" + aux[1] + "/";
 
@@ -181,11 +181,13 @@ public class PlayerScript : MonoBehaviour
 
         foreach (string sFilePath in aFilePaths)
         {
-            if (Path.GetExtension(sFilePath) == ".FBX" || Path.GetExtension(sFilePath) == ".prefab")
+            if (Path.GetExtension(sFilePath) == ".fbx" || Path.GetExtension(sFilePath) == ".prefab")
             {
                 Debug.Log(Path.GetExtension(sFilePath));
 
-                temp = AssetDatabase.LoadAssetAtPath(sFilePath, typeof(Object)) as GameObject;
+                // temp = AssetDatabase.LoadAssetAtPath(sFilePath, typeof(Object)) as GameObject;
+
+                Resources.Load<TextAsset>(sFilePath);
 
                 models.Add(temp);
             }
@@ -198,6 +200,12 @@ public class PlayerScript : MonoBehaviour
         if (collision.gameObject.name == "Wall (Left)" || collision.gameObject.name == "Wall (Right)" || collision.gameObject.name == "Wall (Top)")  // or if(gameObject.CompareTag("YourWallTag"))
         {
             Debug.Log("Collision");
+            transform.Translate(Vector3.zero, Space.World);
+        }
+
+        if (collision.gameObject.name == "test")  // or if(gameObject.CompareTag("YourWallTag"))
+        {
+            Debug.Log("Collision 2");
             transform.Translate(Vector3.zero, Space.World);
         }
     }
