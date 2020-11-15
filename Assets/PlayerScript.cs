@@ -187,11 +187,11 @@ public class PlayerScript : MonoBehaviour
                 string[] path = sFilePath.Split(new char[] { '/' });
                 int n = path.Length; 
 
-                string finalResPath = path[n - 2] + "/" + path[n - 1];
+                string finalResPath = path[n - 2] + "/" + Path.GetFileNameWithoutExtension(path[n - 1]);
 
                 // temp = AssetDatabase.LoadAssetAtPath(sFilePath, typeof(Object)) as GameObject;
-                Debug.Log("Adding the model: " +  finalResPath);
                 temp = Resources.Load(finalResPath, typeof(GameObject)) as GameObject;
+                Debug.Log("Adding the model: " +  finalResPath + " is null?: " + (temp == null? "yes" : "no"));
 
                 models.Add(temp);
             }
