@@ -171,28 +171,33 @@ public class PlayerScript : MonoBehaviour
 
     public void loadPlayerModels()
     {
-        string sAssetFolderPath = "Assets/Resources/PlayerModels";
+        string sAssetFolderPath = "Assets/Resources/PlayerModels/";
         string[] aux = sAssetFolderPath.Split(new char[] { '/' });
         string onlyFolderPath = aux[0] + "/" + aux[1] + "/";
 
-        string[] aFilePaths = Directory.GetFiles(onlyFolderPath);
+        string[] aFilePaths = Directory.GetFiles(sAssetFolderPath);
 
         GameObject temp;
-
+        
         foreach (string sFilePath in aFilePaths)
         {
+            // Debug.Log("Path: [" + sFilePath + "] paths");
             if (Path.GetExtension(sFilePath) == ".fbx" || Path.GetExtension(sFilePath) == ".prefab")
             {
-                Debug.Log(Path.GetExtension(sFilePath));
+                string[] path = sFilePath.Split(new char[] { '/' });
+                int n = path.Length; 
+
+                string finalResPath = path[n - 2] + "/" + path[n - 1];
 
                 // temp = AssetDatabase.LoadAssetAtPath(sFilePath, typeof(Object)) as GameObject;
-
-                Resources.Load<TextAsset>(sFilePath);
+                Debug.Log("Adding the model: " +  finalResPath);
+                temp = Resources.Load(finalResPath, typeof(GameObject)) as GameObject;
 
                 models.Add(temp);
             }
         }
-
+        Debug.Log("End Paths: [" + aFilePaths.ToString() + "] paths");
+        Debug.Log("Added [" + models.Count + "] Objects");
     }
 
     void OnCollisionEnter(Collision collision)
