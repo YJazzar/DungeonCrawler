@@ -14,7 +14,9 @@ public class MovingWalls : MonoBehaviour
 
     GameObject WallOne, WallTwo;
     Transform transformOne, transformTwo;
-    public Vector3 wallSpeed;
+
+    // Constants
+    Vector3 wallSpeed = new Vector3(0, 0, -15);
 
 
     void Start()
@@ -35,9 +37,9 @@ public class MovingWalls : MonoBehaviour
         // Create the transform object for wallTwo
         temp = new GameObject();
         transformTwo = temp.transform;
-        transformTwo.Translate(new Vector3(0, 4.4F, -10), Space.World);
+        transformTwo.Translate(new Vector3(0, 4.4F, 40), Space.World);
         // Create the wallTwo object
-        WallTwo = Instantiate(prefabWalls[1], transformOne.position, transformOne.rotation) as GameObject;
+        WallTwo = Instantiate(prefabWalls[1], transformTwo.position, transformTwo.rotation) as GameObject;
         WallTwo.transform.parent = transformTwo;
         WallTwo.AddComponent(typeof(MeshCollider));
     }
@@ -45,15 +47,22 @@ public class MovingWalls : MonoBehaviour
 
     public void FixedUpdate()
     {
+        // Move the walls
         // transformOne.Translate(wallSpeed * Time.deltaTime, Space.World);
-        if (WallOne.transform.position.z < -46)
+        // transformTwo.Translate(wallSpeed * Time.deltaTime, Space.World);
+
+        if (WallOne.transform.position.z < -60)
         {
-            transformOne.Translate(new Vector3(0, 0, 50), Space.World);
+            transformOne.Translate(new Vector3(0, 0, 40), Space.World);
+            transformTwo.Translate(new Vector3(0, 0, 40), Space.World);
         }
         else
         {
-            transformOne.Translate(new Vector3(0, 0, -5)* Time.deltaTime, Space.World);
+            transformOne.Translate(wallSpeed * Time.deltaTime, Space.World);
+            transformTwo.Translate(wallSpeed * Time.deltaTime, Space.World);
         }
+
+        
     }
 
   

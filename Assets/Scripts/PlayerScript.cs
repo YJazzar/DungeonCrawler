@@ -15,7 +15,6 @@ public class PlayerScript : MonoBehaviour
 
     private GameObject currentModel;
 
-
     // Keymappings used for different actions: 
     KeyCode changeModelButton = KeyCode.Space;
     KeyCode rotateRightButton = KeyCode.E;
@@ -28,7 +27,7 @@ public class PlayerScript : MonoBehaviour
     public float tiltIncrement = 3.0f;
 
     public Vector3 speed = new Vector3(10, 10, 0);
-    public Vector3 maxspeed = new Vector3(30, 30, 0);
+    public Vector3 maxspeed = new Vector3(30, 30, 30);
 
 
     private KeyCode[] numberKeyCodes = {
@@ -54,6 +53,9 @@ public class PlayerScript : MonoBehaviour
         currModelNumber = 0;
         models = Utils.loadPlayerModels();
         changeModel();
+
+        // Fix the collission bug by moving player on startup
+        transform.Translate(new Vector3(0.1f, 0.1f, 0.1f), Space.World);
     }
 
     public void Update()
@@ -87,7 +89,7 @@ public class PlayerScript : MonoBehaviour
                 changeModel();
                 break;
             }
-        }
+        }`
 
     }
 
@@ -97,7 +99,7 @@ public class PlayerScript : MonoBehaviour
         float inputY = Input.GetAxis("Vertical");
 
         // Vector3 movement = new Vector3(speed.x * inputX, speed.y * inputY, 0);
-        Vector3 movement = new Vector3(speed.x * inputX, speed.y * inputY, 0);
+        Vector3 movement = new Vector3(speed.x * inputX, speed.y * inputY, 3);
 
         movement *= Time.deltaTime;
         if (movement.x > maxspeed.x)
@@ -107,6 +109,10 @@ public class PlayerScript : MonoBehaviour
         if (movement.y > maxspeed.y)
         {
             movement.y = 5;
+        }
+        if (movement.z > maxspeed.z)
+        {
+            movement.z = 5;
         }
 
         transform.Translate(movement, Space.World);
@@ -163,7 +169,10 @@ public class PlayerScript : MonoBehaviour
     public void changeModel()
     {
         Debug.Log("Changing model to model number = " + currModelNumber);
+
+        // Get the object ready for the swap
         GameObject thisModel = Instantiate(models[currModelNumber], transform.position, transform.rotation) as GameObject;
+ 
         Destroy(currentModel);
         thisModel.transform.parent = transform;
         currentModel = thisModel;
