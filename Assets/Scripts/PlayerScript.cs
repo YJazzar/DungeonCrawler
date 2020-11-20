@@ -52,7 +52,7 @@ public class PlayerScript : MonoBehaviour
 
         // Create the initial object
         currModelNumber = 0;
-        loadPlayerModels();
+        models = Utils.loadPlayerModels();
         changeModel();
     }
 
@@ -97,7 +97,7 @@ public class PlayerScript : MonoBehaviour
         float inputY = Input.GetAxis("Vertical");
 
         // Vector3 movement = new Vector3(speed.x * inputX, speed.y * inputY, 0);
-        Vector3 movement = new Vector3(0, speed.y * inputY, speed.x * inputX);
+        Vector3 movement = new Vector3(speed.x * inputX, speed.y * inputY, 0);
 
         movement *= Time.deltaTime;
         if (movement.x > maxspeed.x)
@@ -167,53 +167,6 @@ public class PlayerScript : MonoBehaviour
         Destroy(currentModel);
         thisModel.transform.parent = transform;
         currentModel = thisModel;
-    }
-
-
-    public void loadPlayerModels()
-    {
-        string sAssetFolderPath = "Assets/Resources/PlayerModels/";
-        string[] aux = sAssetFolderPath.Split(new char[] { '/' });
-        string onlyFolderPath = aux[0] + "/" + aux[1] + "/";
-
-        string[] aFilePaths = Directory.GetFiles(sAssetFolderPath);
-
-        GameObject temp;
-        
-        foreach (string sFilePath in aFilePaths)
-        {
-            // Debug.Log("Path: [" + sFilePath + "] paths");
-            if (Path.GetExtension(sFilePath) == ".fbx" || Path.GetExtension(sFilePath) == ".prefab")
-            {
-                string[] path = sFilePath.Split(new char[] { '/' });
-                int n = path.Length; 
-
-                string finalResPath = path[n - 2] + "/" + Path.GetFileNameWithoutExtension(path[n - 1]);
-
-                // temp = AssetDatabase.LoadAssetAtPath(sFilePath, typeof(Object)) as GameObject;
-                temp = Resources.Load(finalResPath, typeof(GameObject)) as GameObject;
-                // Debug.Log("Adding the model: " +  finalResPath + " is null?: " + (temp == null? "yes" : "no"));
-
-                models.Add(temp);
-            }
-        }
-        // Debug.Log("End Paths: [" + aFilePaths.ToString() + "] paths");
-        // Debug.Log("Added [" + models.Count + "] Objects");
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.name == "Wall (Left)" || collision.gameObject.name == "Wall (Right)" || collision.gameObject.name == "Wall (Top)")  // or if(gameObject.CompareTag("YourWallTag"))
-        {
-            Debug.Log("Collision");
-            transform.Translate(Vector3.zero, Space.World);
-        }
-
-        if (collision.gameObject.name == "cube_hole_wall" || collision.gameObject.name == "circle_hole_wall" || collision.gameObject.name == "pill_hole_wall")  // or if(gameObject.CompareTag("YourWallTag"))
-        {
-            Debug.Log("Collision 2");
-            transform.Translate(Vector3.zero, Space.World);
-        }
     }
 
 }
