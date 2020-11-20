@@ -19,7 +19,7 @@ public class MovingWalls : MonoBehaviour
     // Constants
     Vector3 wallSpeed = new Vector3(0, 0, -15);
     float wallDistanceOffset = 60;
-    float fadeSpeed = 5;
+    float fadeSpeed = 3;
 
     void Start()
     {
@@ -45,6 +45,9 @@ public class MovingWalls : MonoBehaviour
         WallTwo.transform.parent = transformTwo;
         WallTwo.AddComponent(typeof(MeshCollider));
         WallTwo.GetComponent<MeshRenderer>().material = Utils.getWallTwoMaterial();
+
+        InvokeRepeating("OutputTime", 2f, 1f);  //1s delay, repeat every 1s
+
     }
 
 
@@ -93,6 +96,12 @@ public class MovingWalls : MonoBehaviour
         Color objColor = WallOne.GetComponent<Renderer>().material.color;
         objColor = new Color(objColor.r, objColor.g, objColor.b, 1);
         WallOne.GetComponent<Renderer>().material.color = objColor;
+    }
+
+    void OutputTime()
+    {
+        // Debug.Log(Time.time);
+        wallSpeed *= 1.05f;
     }
   
 }
