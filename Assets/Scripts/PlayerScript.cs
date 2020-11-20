@@ -183,4 +183,6 @@ public class PlayerScript : MonoBehaviour
 
 /***
  * TODO: Instead of using prefabs, try to create instance of the actual objects, and then moving them around
- * /
+ ***/
+
+
