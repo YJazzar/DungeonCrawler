@@ -73,4 +73,14 @@ public class Utils
         return prefabWalls;
     }
 
+    public static Material getWallOneMaterial() {
+        return Resources.Load("Materials/WallOneMat", typeof(Material)) as Material;
+    }
+
+    public static Material getWallTwoMaterial()
+    {
+        return Resources.Load("Materials/WallTwoMat", typeof(Material)) as Material;
+    }
+
+
 }

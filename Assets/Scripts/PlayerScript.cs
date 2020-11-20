@@ -89,7 +89,7 @@ public class PlayerScript : MonoBehaviour
                 changeModel();
                 break;
             }
-        }`
+        }
 
     }
 
