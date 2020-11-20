@@ -96,7 +96,8 @@ public class PlayerScript : MonoBehaviour
         float inputX = Input.GetAxis("Horizontal");
         float inputY = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(speed.x * inputX, speed.y * inputY, 0);
+        // Vector3 movement = new Vector3(speed.x * inputX, speed.y * inputY, 0);
+        Vector3 movement = new Vector3(0, speed.y * inputY, speed.x * inputX);
 
         movement *= Time.deltaTime;
         if (movement.x > maxspeed.x)
