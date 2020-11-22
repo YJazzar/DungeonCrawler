@@ -12,21 +12,21 @@ public class PlayerScript : MonoBehaviour
     public List<GameObject> models;
     public int currModelNumber;
     public GameObject currentModel;
-
+   
 
     // Keymappings used for different actions: 
     KeyCode changeModelButton = KeyCode.Space;
     KeyCode rotateRightButton = KeyCode.E;
     KeyCode rotateLeftButton = KeyCode.Q;
 
-
+    
     private Rigidbody rb;
     private float tiltAngle = 0.0f;
     private bool rotatingLeft;
     private bool rotatingRight;
     public float tiltIncrement = 3.0f;
 
-
+    
     public Vector3 maxspeed = new Vector3(30, 30, 30);
 
     // Save initial position to reload every time the game is reset
@@ -51,8 +51,7 @@ public class PlayerScript : MonoBehaviour
     {
         // Create the initial object
         currModelNumber = 0;
-        if (models.Count == 0)
-        {
+        if (models.Count == 0) {
             models = Utils.loadPlayerModels();
         }
 
@@ -62,8 +61,7 @@ public class PlayerScript : MonoBehaviour
         // InvokeRepeating("setRecoverySpeed", 4f, 2f);  //1s delay, repeat every 1s
     }
 
-    public void Reset()
-    {
+    public void Reset() {
         transform.position = resetPos;
     }
 
@@ -75,7 +73,7 @@ public class PlayerScript : MonoBehaviour
 
     public void FixedUpdate()
     {
-
+        
     }
 
     // Check if we need to change the model of the player
@@ -125,7 +123,7 @@ public class PlayerScript : MonoBehaviour
         }
 
         rb = GetComponent(typeof(Rigidbody)) as Rigidbody;
-        rb.MovePosition(transform.position + movement * Time.deltaTime);
+        rb.MovePosition(transform.position + movement);
     }
 
 
@@ -180,7 +178,7 @@ public class PlayerScript : MonoBehaviour
 
         // Get the object ready for the swap
         GameObject thisModel = Instantiate(models[currModelNumber], transform.position, transform.rotation) as GameObject;
-
+ 
         Destroy(currentModel);
         thisModel.transform.parent = transform;
         currentModel = thisModel;
