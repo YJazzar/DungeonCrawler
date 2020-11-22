@@ -148,8 +148,6 @@ public class PlayerScript : MonoBehaviour
             // Rotate the cube by converting the angles into a quaternion.
             Quaternion target = Quaternion.Euler(0, 0, tiltAngle);
             transform.rotation = target;
-
-            Debug.Log("Rotating NOW = " + tiltAngle);
             tiltAngle += tiltIncrement;
         }
 
@@ -160,8 +158,6 @@ public class PlayerScript : MonoBehaviour
             // Rotate the cube by converting the angles into a quaternion.
             Quaternion target = Quaternion.Euler(0, 0, tiltAngle);
             transform.rotation = target;
-
-            Debug.Log("Rotating NOW = " + tiltAngle);
             tiltAngle -= tiltIncrement;
         }
     }
@@ -179,10 +175,3 @@ public class PlayerScript : MonoBehaviour
     }
 
 }
-
-
-/***
- * TODO: Instead of using prefabs, try to create instance of the actual objects, and then moving them around
- ***/
-
-
