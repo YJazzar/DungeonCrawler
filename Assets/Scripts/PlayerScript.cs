@@ -22,7 +22,8 @@ public class PlayerScript : MonoBehaviour
     KeyCode rotateRightButton = KeyCode.E;
     KeyCode rotateLeftButton = KeyCode.Q;
 
-
+    
+    private Rigidbody rb;
     private float tiltAngle = 0.0f;
     private bool rotatingLeft;
     private bool rotatingRight;
@@ -116,7 +117,9 @@ public class PlayerScript : MonoBehaviour
             movement.z = 5;
         }
 
-        transform.Translate(movement, Space.World);
+        rb = GetComponent(typeof(Rigidbody)) as Rigidbody;
+        rb.MovePosition(transform.position + movement);
+        // transform.Translate(movement, Space.World);
     }
 
 
@@ -148,7 +151,9 @@ public class PlayerScript : MonoBehaviour
         {
             // Rotate the cube by converting the angles into a quaternion.
             Quaternion target = Quaternion.Euler(0, 0, tiltAngle);
-            transform.rotation = target;
+            rb = GetComponent(typeof(Rigidbody)) as Rigidbody;
+            rb.MoveRotation(target);
+            // transform.rotation = target;
             tiltAngle += tiltIncrement;
         }
 
@@ -158,7 +163,9 @@ public class PlayerScript : MonoBehaviour
         {
             // Rotate the cube by converting the angles into a quaternion.
             Quaternion target = Quaternion.Euler(0, 0, tiltAngle);
-            transform.rotation = target;
+            rb = GetComponent(typeof(Rigidbody)) as Rigidbody;
+            rb.MoveRotation(target);
+            // transform.rotation = target;
             tiltAngle -= tiltIncrement;
         }
     }

@@ -25,7 +25,7 @@ public class MovingWalls : MonoBehaviour
     void Start()
     {
         // Error checking
-        if (wallObjects.Count != 3) 
+        if (wallObjects.Count != 6) 
         {
             Debug.LogError("[ERROR]: Make sure to set the list wall object references for the MovingWalls.cs script!");
         }
@@ -71,7 +71,7 @@ public class MovingWalls : MonoBehaviour
         {
             // Reset the wall
             wallObjects[wallOne].transform.position = resetPosition;
-            resetWallFade(wallOne);
+            
 
             // Get the new wall that wallOne will be swapped out with
             int temp = Random.Range(0, unusedWalls.Count);
@@ -82,9 +82,10 @@ public class MovingWalls : MonoBehaviour
             unusedWalls.Add(wallOne);
             wallOne = wallTwo; 
             wallTwo = newWall;
+            resetWallFade(newWall);
 
             // Set the position of the newWall to be correctly displaced
-            wallObjects[wallTwo].transform.position = wallObjects[wallOne].transform.position + new Vector3(0, 0, 2 * wallDistanceOffset);
+            wallObjects[newWall].transform.position = wallObjects[wallOne].transform.position + new Vector3(0, 0, 2 * wallDistanceOffset);
         }
 
         // Check if any of the walls need to become transparent
@@ -120,10 +121,19 @@ public class MovingWalls : MonoBehaviour
 
     void OutputTime()
     {
-        // Debug.Log(Time.time);
-        wallSpeed *= 1.03f;
-        if (wallSpeed.z < -24) {
+        // Increase the wallSpeed if it has not reached the maximum speed yet
+        if (wallSpeed.z > -24) {
+            wallSpeed.z *= 1.03f;
+        } 
+
+        // If the wall speed is at the max, then start decreasing the wall distance offset   
+        else 
+        {
             wallSpeed.z = -24;
+            if (wallDistanceOffset > 15) {
+                wallDistanceOffset *= 0.95f;
+            }
+
         }
     }
   
