@@ -14,6 +14,8 @@ public class PlayerScript : MonoBehaviour
     private int currModelNumber;
 
     private GameObject currentModel;
+    public float recoverySpeed = 7; 
+    
 
     // Keymappings used for different actions: 
     KeyCode changeModelButton = KeyCode.Space;
@@ -47,15 +49,14 @@ public class PlayerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("From the player script");
+        recoverySpeed = 5;
 
         // Create the initial object
         currModelNumber = 0;
         models = Utils.loadPlayerModels();
         changeModel();
 
-        // Fix the collission bug by moving player on startup
-        transform.Translate(new Vector3(0.1f, 0.1f, 0.1f), Space.World);
+        InvokeRepeating("setRecoverySpeed", 4f, 2f);  //1s delay, repeat every 1s
     }
 
     public void Update()
@@ -99,7 +100,7 @@ public class PlayerScript : MonoBehaviour
         float inputY = Input.GetAxis("Vertical");
 
         // Vector3 movement = new Vector3(speed.x * inputX, speed.y * inputY, 0);
-        Vector3 movement = new Vector3(speed.x * inputX, speed.y * inputY, 3);
+        Vector3 movement = new Vector3(speed.x * inputX, speed.y * inputY, recoverySpeed);
 
         movement *= Time.deltaTime;
         if (movement.x > maxspeed.x)
@@ -172,6 +173,14 @@ public class PlayerScript : MonoBehaviour
         Destroy(currentModel);
         thisModel.transform.parent = transform;
         currentModel = thisModel;
+    }
+
+    public void setRecoverySpeed() {
+        if (recoverySpeed <= 1) {
+            recoverySpeed = 1; 
+        } else {
+            recoverySpeed *= 0.5f;
+        }
     }
 
 }
