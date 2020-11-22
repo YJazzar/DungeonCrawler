@@ -10,12 +10,9 @@ public class PlayerScript : MonoBehaviour
 {
 
     public List<GameObject> models;
-
-    private int currModelNumber;
-
-    private GameObject currentModel;
-    public float recoverySpeed = 7; 
-    
+    public int currModelNumber;
+    public GameObject currentModel;
+   
 
     // Keymappings used for different actions: 
     KeyCode changeModelButton = KeyCode.Space;
@@ -29,9 +26,11 @@ public class PlayerScript : MonoBehaviour
     private bool rotatingRight;
     public float tiltIncrement = 3.0f;
 
-    public Vector3 speed = new Vector3(10, 10, 0);
+    
     public Vector3 maxspeed = new Vector3(30, 30, 30);
 
+    // Save initial position to reload every time the game is reset
+    Vector3 resetPos;
 
     private KeyCode[] numberKeyCodes = {
         KeyCode.Alpha0,
@@ -48,16 +47,22 @@ public class PlayerScript : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
-        recoverySpeed = 5;
-
         // Create the initial object
         currModelNumber = 0;
-        models = Utils.loadPlayerModels();
+        if (models.Count == 0) {
+            models = Utils.loadPlayerModels();
+        }
+
         changeModel();
 
-        InvokeRepeating("setRecoverySpeed", 4f, 2f);  //1s delay, repeat every 1s
+        resetPos = transform.position;
+        // InvokeRepeating("setRecoverySpeed", 4f, 2f);  //1s delay, repeat every 1s
+    }
+
+    public void Reset() {
+        transform.position = resetPos;
     }
 
     public void Update()
@@ -68,7 +73,7 @@ public class PlayerScript : MonoBehaviour
 
     public void FixedUpdate()
     {
-        handleMovement();
+        
     }
 
     // Check if we need to change the model of the player
@@ -95,13 +100,13 @@ public class PlayerScript : MonoBehaviour
 
     }
 
-    void handleMovement()
+    public void handleMovement(Vector3 speed)
     {
         float inputX = Input.GetAxis("Horizontal");
         float inputY = Input.GetAxis("Vertical");
 
         // Vector3 movement = new Vector3(speed.x * inputX, speed.y * inputY, 0);
-        Vector3 movement = new Vector3(speed.x * inputX, speed.y * inputY, recoverySpeed);
+        Vector3 movement = new Vector3(speed.x * inputX, speed.y * inputY, speed.z);
 
         movement *= Time.deltaTime;
         if (movement.x > maxspeed.x)
@@ -119,7 +124,6 @@ public class PlayerScript : MonoBehaviour
 
         rb = GetComponent(typeof(Rigidbody)) as Rigidbody;
         rb.MovePosition(transform.position + movement);
-        // transform.Translate(movement, Space.World);
     }
 
 
@@ -153,7 +157,6 @@ public class PlayerScript : MonoBehaviour
             Quaternion target = Quaternion.Euler(0, 0, tiltAngle);
             rb = GetComponent(typeof(Rigidbody)) as Rigidbody;
             rb.MoveRotation(target);
-            // transform.rotation = target;
             tiltAngle += tiltIncrement;
         }
 
@@ -165,7 +168,6 @@ public class PlayerScript : MonoBehaviour
             Quaternion target = Quaternion.Euler(0, 0, tiltAngle);
             rb = GetComponent(typeof(Rigidbody)) as Rigidbody;
             rb.MoveRotation(target);
-            // transform.rotation = target;
             tiltAngle -= tiltIncrement;
         }
     }
@@ -181,13 +183,4 @@ public class PlayerScript : MonoBehaviour
         thisModel.transform.parent = transform;
         currentModel = thisModel;
     }
-
-    public void setRecoverySpeed() {
-        if (recoverySpeed <= 1) {
-            recoverySpeed = 1; 
-        } else {
-            recoverySpeed *= 0.5f;
-        }
-    }
-
 }

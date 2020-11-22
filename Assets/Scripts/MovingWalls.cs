@@ -12,9 +12,11 @@ public class MovingWalls : MonoBehaviour
 
     public List<GameObject> wallObjects;
     public GameObject playerObject;
+    PlayerScript ps;
 
     int wallOne, wallTwo;   // used as indices to the wall Objects
     List<int> unusedWalls;
+    public int score;
 
     // Constants
     public Vector3 wallSpeed = new Vector3(0, 0, -15);
@@ -22,7 +24,7 @@ public class MovingWalls : MonoBehaviour
     float wallDistanceOffset = 40;
     float fadeSpeed = 3;
 
-    void Start()
+    public void Start()
     {
         // Error checking
         if (wallObjects.Count != 6) 
@@ -34,6 +36,9 @@ public class MovingWalls : MonoBehaviour
         {
             Debug.LogError("[ERROR]: Make sure to set the player object reference in the MovingWalls.cs script!");
         }
+
+        score = 0;
+        ps = playerObject.GetComponent<PlayerScript>();
 
         // Shuffle the set of walls
         int swapIndex; 
@@ -63,12 +68,52 @@ public class MovingWalls : MonoBehaviour
         InvokeRepeating("OutputTime", 2f, 1f);  //1s delay, repeat every 1s
     }
 
+    public void Reset() {
+        wallDistanceOffset = 40;
+        fadeSpeed = 3;
+        score = 0;
+
+        // Set the correct indices for wallOne and wallTwo. Then transform them into their initial positions
+        wallOne = 0;
+        wallTwo = 1;
+        wallObjects[wallOne].transform.position = new Vector3(0, 4.4F, 0 * wallDistanceOffset);
+        wallObjects[wallTwo].transform.position = new Vector3(0, 4.4F, 2 * wallDistanceOffset);
+
+
+        // Init the list of unused walls to keep track of and hide them from the user
+        while (unusedWalls.Count > 0) {
+            unusedWalls.RemoveAt(0);
+        }
+
+        unusedWalls = new List<int>();
+        for (int i = 2; i < wallObjects.Count; i++)
+        {
+            unusedWalls.Add(i);
+            wallObjects[i].transform.position = resetPosition;
+        }
+
+        // Check if any of the walls need to become transparent
+        for (int i = 0; i < wallObjects.Count; i++)
+        {
+            resetWallFade(i);
+        }
+    }
 
     public void FixedUpdate()
     {
         // Check if the walls need to be swapped
-        if (wallObjects[wallOne].transform.position.z < -65)
+        if (wallObjects[wallOne].transform.position.z < playerObject.transform.position.z - 15)
         {
+
+            if (wallObjects[wallOne].name.Contains("pill") && ps.currModelNumber == 0) {
+                score++;
+            } else if (wallObjects[wallOne].name.Contains("cube") && ps.currModelNumber == 1) {
+                score++;
+            } else if (wallObjects[wallOne].name.Contains("circle") && ps.currModelNumber == 2) {
+                score++;
+            } else {
+                score--;
+            }
             // Reset the wall
             wallObjects[wallOne].transform.position = resetPosition;
             
@@ -80,12 +125,19 @@ public class MovingWalls : MonoBehaviour
 
             // Swap out the walls since wallTwo is now closer and wallOne will be reset
             unusedWalls.Add(wallOne);
+            // wallObjects[wallOne].transform.position = new Vector3(0, 60, wallObjects[wallOne].transform.position.z);
             wallOne = wallTwo; 
             wallTwo = newWall;
             resetWallFade(newWall);
 
             // Set the position of the newWall to be correctly displaced
-            wallObjects[newWall].transform.position = wallObjects[wallOne].transform.position + new Vector3(0, 0, 2 * wallDistanceOffset);
+            float x = Random.Range(-8f, 5f); 
+            float y = Random.Range(2f, 12f); 
+            float z = wallObjects[wallOne].transform.position.z + 2 * wallDistanceOffset; 
+            Debug.Log(x + " " + y + " " + z);
+            wallObjects[newWall].transform.position = new Vector3(x, y, z);
+            wallObjects[newWall].transform.rotation = Quaternion.Euler(0,0, Random.Range(0f, 90f));
+            
         }
 
         // Check if any of the walls need to become transparent
@@ -93,12 +145,7 @@ public class MovingWalls : MonoBehaviour
             if (wallObjects[i].transform.position.z - 10 < playerObject.transform.position.z) {
                 fadeWall(i);
             }
-        }
-
-
-        // Move the walls
-        wallObjects[wallOne].transform.Translate(wallSpeed * Time.deltaTime, Space.World);
-        wallObjects[wallTwo].transform.Translate(wallSpeed * Time.deltaTime, Space.World);              
+        }       
     }
 
     public void fadeWall(int wallIndex) {
@@ -130,7 +177,7 @@ public class MovingWalls : MonoBehaviour
         else 
         {
             wallSpeed.z = -24;
-            if (wallDistanceOffset > 15) {
+            if (wallDistanceOffset > 35) {
                 wallDistanceOffset *= 0.95f;
             }
 
