@@ -49,18 +49,21 @@ public class Surrounding : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(mw.score < -2) {
+        if (mw.score < -100)
+        {
             gameOver = true;
         }
-     
+
 
         scoreText.text = "Score: " + mw.score;
 
-        if (cameraObject.transform.position.z > playerObject.transform.position.z) {
+        if (cameraObject.transform.position.z > playerObject.transform.position.z)
+        {
             gameOver = true;
         }
-       
-        if (!gameOver) {
+
+        if (!gameOver)
+        {
             ps.handleMovement(playerSpeed + envSpeed + playerRecoverySpeed);
 
             // Move the camera and the walls
@@ -71,12 +74,14 @@ public class Surrounding : MonoBehaviour
             }
             gameOverText.text = "";
         }
-        else {
+        else
+        {
             gameOverText.text = "Game Over";
         }
     }
 
-    public void Update() {
+    public void Update()
+    {
 
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -88,25 +93,32 @@ public class Surrounding : MonoBehaviour
         }
     }
 
-    public void decreaseRecSpeed() {
-        if (playerRecoverySpeed.z > 0) {
+    public void decreaseRecSpeed()
+    {
+        if (playerRecoverySpeed.z > 0)
+        {
             playerRecoverySpeed *= 0.95f;
-        } else {
+        }
+        else
+        {
             playerRecoverySpeed.z = 0f;
-            if (envSpeed.z < 30) {
+            if (envSpeed.z < 30)
+            {
                 envSpeed *= 1.5f;
             }
         }
     }
-   
-   public void Reset() {
-       for (int i = 0; i < walls.Count; i++) {
-           walls[i].transform.position = new Vector3(walls[i].transform.position.x, walls[i].transform.position.y, initial_wall_z);
-       }
-       cameraObject.transform.position = new Vector3(cameraObject.transform.position.x, cameraObject.transform.position.y, initial_camera_z);
-       scoreText.text = "Score: " + mw.score;
-       gameOverText.text = "";
-       gameOver = false;
-   }
+
+    public void Reset()
+    {
+        for (int i = 0; i < walls.Count; i++)
+        {
+            walls[i].transform.position = new Vector3(walls[i].transform.position.x, walls[i].transform.position.y, initial_wall_z);
+        }
+        cameraObject.transform.position = new Vector3(cameraObject.transform.position.x, cameraObject.transform.position.y, initial_camera_z);
+        scoreText.text = "Score: " + mw.score;
+        gameOverText.text = "";
+        gameOver = false;
+    }
 
 }
