@@ -51,6 +51,10 @@ Material:
     - _BumpOutline: 0
     - _ColorMask: 15
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+    - _CullMode: 0
+>>>>>>> Stashed changes
 =======
     - _CullMode: 0
 >>>>>>> Stashed changes
@@ -101,7 +105,11 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EnvMatrixRotation: {r: 0, g: 0, b: 0, a: 0}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     - _FaceColor: {r: 1, g: 1, b: 1, a: 1}
+=======
+    - _FaceColor: {r: 0.10234961, g: 0.83826536, b: 0.9433962, a: 1}
+>>>>>>> Stashed changes
 =======
     - _FaceColor: {r: 0.10234961, g: 0.83826536, b: 0.9433962, a: 1}
 >>>>>>> Stashed changes
