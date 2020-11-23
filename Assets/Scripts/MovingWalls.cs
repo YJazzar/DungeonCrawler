@@ -101,10 +101,13 @@ public class MovingWalls : MonoBehaviour
 
     public void FixedUpdate()
     {
+        
+
         // Check if the walls need to be swapped
-        if (wallObjects[wallOne].transform.position.z < playerObject.transform.position.z - 15)
+        if (wallObjects[wallOne].transform.position.z < playerObject.transform.position.z - 10)
         {
 
+            // Determine how the score needs to be updated: 
             if (wallObjects[wallOne].name.Contains("pill") && ps.currModelNumber == 0) {
                 score++;
             } else if (wallObjects[wallOne].name.Contains("cube") && ps.currModelNumber == 1) {
@@ -114,6 +117,7 @@ public class MovingWalls : MonoBehaviour
             } else {
                 score--;
             }
+
             // Reset the wall
             wallObjects[wallOne].transform.position = resetPosition;
             
