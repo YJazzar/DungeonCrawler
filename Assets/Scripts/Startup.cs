@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class Startup : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public GameObject startMenu;
+    public Surrounding surrounding;
+
+
     void Start()
     {
-        
+        Time.timeScale = 0f;
+        startMenu.SetActive(true);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void OnStartButtonClicked() {
+        Time.timeScale = 1f;
+        startMenu.SetActive(false);
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
 }

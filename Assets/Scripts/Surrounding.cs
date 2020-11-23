@@ -9,7 +9,8 @@ public class Surrounding : MonoBehaviour
     public GameObject playerObject;
     public List<GameObject> walls;
     public GameObject cameraObject;
-    public Text gameOverText, scoreText;
+    public Text scoreText;
+    public GameOverScript gameOverScript;
 
 
     // Private variables for player object
@@ -69,10 +70,10 @@ public class Surrounding : MonoBehaviour
             {
                 walls[i].transform.Translate(envSpeed * Time.deltaTime);
             }
-            gameOverText.text = "";
         }
         else {
-            gameOverText.text = "Game Over";
+            // Display the gameOver screen:
+            gameOverScript.displayGameOverCanvas();
         }
     }
 
@@ -80,11 +81,7 @@ public class Surrounding : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            mw.Reset();
-            Reset();
-            ps.Reset();
-
-            gameOver = false;
+           ResetAll();
         }
     }
 
@@ -99,13 +96,20 @@ public class Surrounding : MonoBehaviour
         }
     }
    
+    public void ResetAll() {
+        mw.Reset();
+        Reset();
+        ps.Reset();
+
+        gameOver = false;
+    }
+
    public void Reset() {
        for (int i = 0; i < walls.Count; i++) {
            walls[i].transform.position = new Vector3(walls[i].transform.position.x, walls[i].transform.position.y, initial_wall_z);
        }
        cameraObject.transform.position = new Vector3(cameraObject.transform.position.x, cameraObject.transform.position.y, initial_camera_z);
        scoreText.text = "Score: " + mw.score;
-       gameOverText.text = "";
        gameOver = false;
    }
 
